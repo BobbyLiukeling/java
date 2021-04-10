@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title class="lang" lang="eng">Human Rabies - Spatial Distribution</title>
+    <link rel="stylesheet" type="text/css" href="css/module.css">
+    <!-- 引入 ECharts 文件 -->
+    <script src="js/echarts.js"></script>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/language_spatialHR.js"></script>
+    <script>
+        //echarts地图注册、配置与生成
+        function generateMap(myChart, data, startYear, endYear){
+                $.get('./js/Hubei.json', function (hubeiJson) {
+                let dataset = parseDataForMap(data);
+                console.log('min:' + minNum(dataset));
+                console.log('max:' + maxNum(dataset));
+                myChart.hideLoading();
+                echarts.registerMap('Hubei', hubeiJson);
+                let timeInTitle = startYear + '-' + endYear;
+                if(startYear===endYear)
+                    timeInTitle = startYear;
+                let option = {
+                title: {
+                text: 'Spatial distribution of human rabies in Hubei Province, ' + timeInTitle,
+                fontWeight: 'bold',
+                textStyle: {color: 'black', fontSize: 20},
+            },
+                tooltip: {
+                trigger: 'item',
+                showDelay: 0,
+                transitionDuration: 0.2,
+            },
+                visualMap: {
+                left: 'right',
+                min: minNum(dataset),
+                max: maxNum(dataset),
+                inRange: {
+                    color: ['#ffffff', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026' ]
+
+                },
+                text: ['the number of Human Rabies'],           // 文本，默认为数值文本
+                calculable: true
+            },
+                toolbox: {
+                show: true,
+                orient: 'vertical',
+                feature: {
+                restore: {},
+                saveAsImage: {}
+            },
+            },
+                series: [
+            {
+                name: 'region',
+                type: 'map',
+                roam: true,
+                map: 'Hubei',
+                nameMap: zwMapHubei,
+                emphasis: {
+                label: {
+                show: true
+            }
+            },
+                // 文本位置修正
+                textFixed: {
+                Alaska: [20, -20]
+            },
+                data:dataset
+            }
+                ]
+            };
+                myChart.setOption(option);
+            });
+        }
+
+        //检查查询湖北年份狂犬病人数数据的合法性，合法则采用ajax提交
+        function checkAndSubmitForSpatial(){
+            let select = document.querySelectorAll("form select");
+            let selectStartYear = select[0];
+            let selectEndYear = select[1];
+
+            let areaName = 'Hubei';
+            let startYear = selectStartYear.options[selectStartYear.selectedIndex].value;
+            let endYear = selectEndYear.options[selectEndYear.selectedIndex].value;
+
+            let myChart = echarts.init(document.getElementById('spatial-hubei-year'));
+            //判断表单选中值是否合法
+            if (startYear === 'none' || endYear === 'none') {
+                alert('The selection cannot be empty!');
+            } else if (startYear > endYear) {
+                alert('The start time must not be greater than the end time!');
+            } else {
+                let ajax = new XMLHttpRequest();
+                let url = '/rabies/HRSpatialByYear?areaName=' + areaName + '&startYear=' + startYear + '&endYear=' + endYear;
+                ajax.open('get', url, true);
+                ajax.send();
+                myChart.showLoading();
+                ajax.onreadystatechange = function () {
+                    if (ajax.readyState == 4 && ajax.status == 200) {
+                        /*获取到数据后 对echarts数据项进行配置！*/
+                        console.log("后台返回数据："+ this.responseText);
+                        let data = eval(this.responseText);//获取到json字符串，还需解析
+                        // myChart.hideLoading();
+                        generateMap(myChart, data, startYear, endYear);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<!--头部-->
+<section class="header">
+    <div class="head w">
+        <!--具体模块部分-->
+        <div class="module_title">
+            <a href="timeSeries.html">
+                <h1 class="lang" lang="eng">Human Rabies - Spatial Distribution</h1>
+            </a>
+        </div>
+        <!--导航栏部分 nav-->
+        <ul class="nav">
+            <li class="other_modules">
+                <a href="#" class="lang" lang="eng">Other modules<b class="caret"></b></a>
+                <ul class="sub_nav">
+                    <li><a href="temporalHR.html" class="lang" lang="eng">Human Rabies - Temporal Distribution</a></li>
+                    <li><a href="crowdHR.html" class="lang" lang="eng">Human Rabies - Crowd Distribution</a></li>
+                    <li><a href="temporalPV.html" class="lang" lang="eng">Prophylactic Vaccination - Temporal Distribution</a></li>
+                    <li><a href="spatialPV.html" class="lang" lang="eng">Prophylactic Vaccination - Spatial Distribution</a></li>
+                    <li><a href="timeSeries.html" class="lang" lang="eng">Time Series Analysis</a></li>
+                </ul>
+            </li>
+            <li><a href="index.html" class="lang" lang="eng">Home page</a></li>
+            <li><a class="lang" id="translate" href="#" lang="eng">中文</a></li>
+            <script>
+                //注册监听点击事件
+                let transBtn = document.getElementById('translate');
+                transBtn.onclick = function(){
+                    //英翻中
+                    if(this.getAttribute('lang') === 'eng'){
+                        showLanguage('chi');
+                    }
+                    //中翻英
+                    else{
+                        showLanguage('eng');
+                    }
+                }
+            </script>
+        </ul>
+        <script>
+            let modules = document.querySelector(".other_modules");
+            let sub_nav = document.querySelector(".sub_nav");
+            modules.onmouseover = function (){
+                sub_nav.style.display = 'block';
+            }
+            modules.onmouseout = function (){
+                sub_nav.style.display = 'none';
+            }
+        </script>
+    </div>
+</section>
+
+<!--主内容区-->
+<section>
+    <div class="person-container">
+        <form class="condition spatial-condition">
+            <div class="spatial-select-time">
+                <p class="lang" lang="eng">Select the time range about year: &nbsp;</p>
+                <select name="startYear">
+                    <option value="none" selected disabled hidden>Year</option>
+                    <option value="2004">2004</option>
+                    <option value="2005">2005</option>
+                    <option value="2006">2006</option>
+                    <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+                --
+                <select name="endYear">
+                    <option value="none" selected disabled hidden>Year</option>
+                    <option value="2004">2004</option>
+                    <option value="2005">2005</option>
+                    <option value="2006">2006</option>
+                    <option value="2007">2007</option>
+                    <option value="2008">2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+            </div>
+            <button class="spatial-submit-button lang" type="button" onclick="checkAndSubmitForSpatial()" lang="eng" >query</button>
+        </form>
+
+        <div class="echarts">
+            <div id="spatial-hubei-year">
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+-- MySQL dump 10.13  Distrib 8.0.18, for Win64 (x86_64)
+--
+-- Host: localhost    Database: rabies
+-- ------------------------------------------------------
+-- Server version	8.0.18
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `person_data`
+--
+
+DROP TABLE IF EXISTS `person_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `person_data` (
+  `id` int(11) NOT NULL,
+  `year` int(11) DEFAULT NULL,
+  `infant` int(11) DEFAULT NULL,
+  `children` int(11) DEFAULT NULL,
+  `teenager` int(11) DEFAULT NULL,
+  `youth` int(11) DEFAULT NULL,
+  `middle_age` int(11) DEFAULT NULL,
+  `agedness` int(11) DEFAULT NULL,
+  `male` int(11) DEFAULT NULL,
+  `female` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `person_data`
+--
+
+LOCK TABLES `person_data` WRITE;
+/*!40000 ALTER TABLE `person_data` DISABLE KEYS */;
+INSERT INTO `person_data` VALUES (1,2005,15,13,11,52,73,20,125,59),(2,2006,23,14,11,42,107,21,145,73),(3,2007,5,9,8,32,76,22,110,42),(4,2008,0,9,3,21,44,13,59,31),(5,2009,5,5,3,33,65,9,86,34),(6,2010,2,7,2,19,45,9,61,23),(7,2011,5,6,1,27,39,9,60,27),(8,2012,3,2,2,13,31,3,40,14),(9,2013,0,1,1,10,23,4,25,14),(10,2014,3,1,0,3,28,4,26,13),(11,2015,0,1,0,3,24,9,27,10),(12,2016,1,2,0,5,17,6,19,12),(13,2017,1,0,1,3,27,7,28,11),(14,2018,1,0,0,4,23,8,22,14);
+/*!40000 ALTER TABLE `person_data` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-02-15 23:34:58

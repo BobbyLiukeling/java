@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.visual.repository.RabiesInHubeiMapper">
+    <!--结果映射resultMap把select sql执行结果映射到Java对象-->
+    <resultMap id="result" type="RabiesInHubei">
+        <result column="city" property="city"></result>
+        <result column="year" property="year"></result>
+        <result column="infected" property="infected"></result>
+        <result column="exposed" property="exposed"></result>
+        <!--<constructor>
+            <idArg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <idArg column="year" javaType="java.lang.String" jdbcType="CHAR" />
+            <arg column="infected" javaType="int" jdbcType="INTEGER" />
+            <arg column="exposed" javaType="int" jdbcType="INTEGER" />
+        </constructor>-->
+    </resultMap>
+
+    <!--映射语句-->
+    <select id="selectByPrimaryKey" resultMap="result">
+        select
+        *
+        from rabies_in_hubei
+        /* where 'city' = '武汉' and 'year' = '2014'*/
+    </select>
+</mapper>

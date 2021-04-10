@@ -1,0 +1,328 @@
+/* 初始化标签在所有浏览器中的margin、padding值 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+p {
+    color: black;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    background-color: #80397B;
+    width: 100%;
+    height: 50px;
+    z-index: 1;
+}
+
+/*版心*/
+.w {
+    width: 1200px;
+    margin: auto;
+}
+
+.module_title {
+    float: left;
+}
+
+.module_title h1 {
+    display: block;
+    text-align: center;
+    line-height: 50px;
+    color: #FFFFFF;
+}
+
+.nav {
+    float: right;
+}
+
+.nav > li {
+    float: left;
+}
+
+.nav > li {
+    height: 50px;
+    transition: .3s background-color;
+}
+
+.nav > li > a {
+    line-height: 44px;
+    font-size: 18px;
+    color: #FFFFFF;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: block;
+}
+
+.other_modules {
+    width: 188px;
+
+}
+
+.nav > li:hover {
+    background-color: #4a2347;
+    transition: .3s background-color
+}
+
+.caret {
+    display: inline-block;
+    margin-left: 6px;
+    vertical-align: middle;
+    border-top: 6px dashed;
+    border-right: 6px solid transparent;
+    border-left: 6px solid transparent;
+}
+
+.sub_nav {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(271px);
+    background-color: #4a2347;
+    z-index: 1;
+}
+
+.sub_nav li {
+    transition: .3s background-color;
+}
+
+.sub_nav li a {
+    display: block;
+    padding: 3px 20px;
+    font-size: 14px;
+    color: #FFFFFF;
+    line-height: 30px;
+}
+
+.sub_nav li:hover {
+    background-color: #ce9ccf;
+}
+
+.main {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.sidebar {
+    position: fixed;
+    overflow-y: auto;
+    top: 60px;
+    z-index: 1;
+    float: left;
+    width: 15%;
+    height: 90%;
+    background-color: #faf6fc;
+}
+
+.sidebar-title {
+    padding-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: white;
+    text-align: center;
+}
+
+.sidebar-content {
+    padding: 10px 0;
+    border-top: 1px solid #cbc7e3;
+    transition: all .3s;
+}
+
+a {
+    display: block;
+    font-size: 15px;
+    text-align: center;
+    background-color: transparent;
+}
+
+.current {
+    background-color: #b4a7c4;
+}
+
+.container {
+    display: none;
+    overflow-y: auto;
+    float: right;
+    margin-top: 50px;
+    margin-right: 5%;
+    width: 76%;
+}
+
+.default-container {
+    display: block;
+}
+
+.person-container {
+    margin: 60px auto;
+    width: 100%;
+}
+
+.person-select {
+    width: 92%;
+    margin: 0 auto;
+}
+
+.temporal-select {
+    margin: 60px auto;
+    width: 92%;
+}
+
+.person-select .person-condition {
+    padding-left: 20%;
+}
+
+#person-echarts {
+    margin: 20px auto;
+    width: 92%;
+    height: 430px;
+}
+
+#acf1, #acf2 {
+    width: 800px;
+    height: 550px;
+    padding: 10px;
+    margin: 40px auto;
+}
+
+#spectrum1, #spectrum2 {
+    width: 800px;
+    height: 400px;
+    margin: 40px auto;
+    padding: 10px;
+}
+
+#diagnose1, #diagnose2 {
+    width: 800px;
+    margin: 40px auto;
+    padding: 10px;
+}
+
+.diagnose-title {
+    display: inline-block;
+    background-color: #eceef1;
+}
+
+.diagnose {
+    width: 90%;
+    margin: 40px auto 0 auto;
+}
+
+#arima1, #arima2 {
+    width: 800px;
+    height: 500px;
+    margin: 0 auto 10px auto;
+    padding: 10px;
+}
+
+.condition {
+    width: 100%;
+    background-color: #eceef1;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.spatial-condition {
+    width: 90%;
+    margin: 60px auto;
+    height: 65px;
+}
+
+.condition p {
+    display: inline;
+    font-size: 18px;
+    font-style: oblique;
+    vertical-align: center;
+}
+
+select {
+    padding: 2px;
+    border-radius: 5px;
+    border: 1px solid #80397B;
+    text-align: center;
+    font-size: 16px;
+}
+
+.select-city {
+    float: left;
+}
+
+.select-time {
+    float: left;
+    margin-left: 5%;
+}
+
+.select-data {
+    float: left;
+    margin-left: 5%;
+}
+
+.select-unit {
+    float: right;
+}
+
+.submit-button {
+    padding: 0;
+    margin-top: 45px;
+    margin-left: 48%;
+}
+
+.condition .person-submit {
+    display: inline;
+    margin-left: 24%;
+}
+
+.condition button {
+    padding: 2px 4px;
+    border-radius: 5px;
+    border: 2px solid #80397B;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 16px;
+    transition-duration: 0.3s;
+}
+
+.spatial-select-time {
+    float: left;
+}
+
+.condition .spatial-submit-button {
+    float: left;
+    margin-top: 0;
+    margin-left: 10%;
+}
+
+.condition button:hover {
+    background-color: #80397B;
+    color: white;
+}
+
+.echarts {
+    width: 100%;
+}
+
+#timeVariationByYear {
+    width: 820px;
+    height: 480px;
+    margin: 10px auto;
+}
+
+#spatial-hubei-year {
+    width: 90%;
+    height: 500px;
+    margin: 0 auto;
+    background-color: white;
+}

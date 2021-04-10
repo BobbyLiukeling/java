@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title class="lang" lang="eng">Time Series Analysis</title>
+    <link rel="stylesheet" type="text/css" href="css/module.css">
+    <!-- 引入 ECharts 文件 -->
+    <script src="js/echarts.js"></script>
+    <script src="js/language_timeSeries.js"></script>
+    <script>
+        function isEnglishEnvironment(){
+            let transBtn = document.getElementById('translate');
+            if(transBtn.getAttribute('lang')==='eng')
+                return true;
+            else
+                return false;
+        }
+    </script>
+</head>
+<body>
+    <!--头部-->
+    <section class="header">
+        <div class="head w">
+            <!--具体模块部分-->
+            <div class="module_title">
+            <a href="timeSeries.html">
+                <h1 class="lang" lang="eng">Time Series Analysis</h1>
+            </a>
+            </div>
+            <!--导航栏部分 nav-->
+            <ul class="nav">
+                <li class="other_modules">
+                    <a href="#" class="lang" lang="eng">Other modules<b class="caret"></b></a>
+                    <ul class="sub_nav">
+                        <li><a href="temporalHR.html" class="lang" lang="eng">Rabies Incidence - Temporal Distribution</a></li>
+                        <li><a href="spatialHR.html" class="lang" lang="eng">Rabies Incidence - Spatial Distribution</a></li>
+                        <li><a href="crowdHR.html" class="lang" lang="eng">Rabies Incidence - Crowd Distribution</a></li>
+                        <li><a href="temporalPV.html" class="lang" lang="eng">Rabies Exposure - Temporal Distribution</a></li>
+                        <li><a href="spatialPV.html" class="lang" lang="eng">Rabies Exposure - Spatial Distribution</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html" class="lang" lang="eng">Home page</a></li>
+                <li><a class="lang" id="translate" href="#" lang="eng">中文</a></li>
+                <script>
+                    //注册监听点击事件
+                    let transBtn = document.getElementById('translate');
+                    transBtn.onclick = function(){
+                        //英翻中
+                        if(this.getAttribute('lang') === 'eng'){
+                            showLanguage('chi');
+                        }
+                        //中翻英
+                        else{
+                            showLanguage('eng');
+                        }
+                    }
+                </script>
+            </ul>
+            <script>
+                let modules = document.querySelector(".other_modules");
+                let sub_nav = document.querySelector(".sub_nav");
+                modules.onmouseover = function (){
+                    sub_nav.style.display = 'block';
+                }
+                modules.onmouseout = function (){
+                    sub_nav.style.display = 'none';
+                }
+            </script>
+        </div>
+    </section>
+
+    <!--可视区-->
+    <section class="main">
+        <!--侧边栏-->
+        <div class="sidebar">
+            <ul>
+                <li class="sidebar-title lang"  lang="eng">
+                    Analysis and Prediction
+                </li>
+                <li class="sidebar-content current">
+                    <a href="#" class="side-nav lang" lang="eng">
+                        Rabies Incidence
+                    </a>
+                </li>
+                <li class="sidebar-content">
+                    <a href="#" class="side-nav lang" lang="eng">
+                        Rabies Exposure
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--内容区-->
+        <div class="container default-container">
+            <!--狂犬病季度数据平稳性分析-->
+            <div id="acf1">
+            </div>
+            <script>
+                {
+                    let acf = echarts.init(document.getElementById("acf1"));
+                    let option;
+                    // if(isEnglishEnvironment())
+                        option = {
+                        title: {
+                            text: 'Feature mining: stability analysis for rabies incidence',
+                            fontWeight: 'bold',
+                            textStyle: {color: 'black', fontSize: 20},
+                            backgroundColor: '#eceef1'
+                        },
+                        dataZoom: {xAxisIndex: [0, 1]},
+                        tooltip: {},
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            feature: {restore: {}, saveAsImage: {}}
+                        },
+                        grid: [{
+                            top: 70,
+                            bottom: '56%',
+                            show: true,
+                            borderWidth: 4
+                        },
+
+                            {
+                                top: '56%',
+                                bottom: 70,
+                                show: true,
+                                borderWidth: 4
+                            }
+                        ],
+                        xAxis: [{
+                            type: 'category',
+                            name: 'Lag',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                            axisTick: {show: false},
+                            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'],
+                            gridIndex: 0,
+                            nameLocation: 'middle',
+                            fontSize: 18,
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                            nameGap: 30
+                        },
+
+                            {
+                                type: 'category',
+                                name: 'Lag',
+                                axisLine: {show: true, lineStyle: {width: 3}},
+                                axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                                axisTick: {show: false},
+                                data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'],
+                                gridIndex: 1,
+                                nameLocation: 'middle',
+                                fontSize: 18,
+                                nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                                nameGap: 30
+                            }
+                        ],
+
+                        yAxis: [{
+                            name: 'ACF',
+                            gridIndex: 0,
+                            nameLocation: 'middle',
+                            min: -0.4,
+                            max: 0.8,
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                            axisTick: {show: true},
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                            nameGap: 35
+                        },
+
+                            {
+                                name: 'Partial ACF',
+                                gridIndex: 1,
+                                nameLocation: 'middle',
+                                min: -0.4,
+                                max: 0.8,
+                                axisLine: {show: true, lineStyle: {width: 3}},
+                                axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                                axisTick: {show: true},
+                                splitLine: {show: false},
+                                nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                                nameGap: 35
+                            }
+                        ],
+
+                        series: [{
+                            type: 'bar',
+                            barWidth: 3,
+                            itemStyle: {color: '#0c66ee'},
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: [0.70786683, 0.46075469, 0.5468378, 0.70684821, 0.53644352, 0.33437543, 0.43371491,
+                                0.57763816, 0.41457971, 0.21815018, 0.26869885, 0.33820689, 0.2173571, 0.06146998,
+                                0.10072772, 0.19732847, 0.09704908],
+                            markLine: {
+                                lineStyle: {type: 'dashed', color: '#e94371'},
+                                symbol: 'none',
+                                label: {show: false},
+                                data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                            }
+                        },
+
+
+                            {
+                                type: 'bar',
+                                barWidth: 3,
+                                itemStyle: {color: '#e94371'},
+                                xAxisIndex: 1,
+                                yAxisIndex: 1,
+                                data: [0.707866829, -0.080815334, 0.507465036, 0.33410065, -0.271967704, -0.019152841,
+                                    0.221846907, 0.021432869, -0.195041289, -0.002072154, -0.052266075, -0.208960742,
+                                    0.045021606, -0.036262514, -0.086517495, 0.120946076, -0.05836773],
+                                markLine: {
+                                    lineStyle: {type: 'dashed', color: '#0c66ee'},
+                                    symbol: 'none', label: {show: false},
+                                    data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                                }
+                            }
+                        ]
+                    };
+                    // else
+                    //     option = {
+                    //         title: {
+                    //             text: '特征挖掘：狂犬病发病的平稳性分析',
+                    //             fontWeight: 'bold',
+                    //             textStyle: {color: 'black', fontSize: 20},
+                    //             backgroundColor: '#eceef1'
+                    //         },
+                    //         dataZoom: {xAxisIndex: [0, 1]},
+                    //         tooltip: {},
+                    //         toolbox: {
+                    //             show: true,
+                    //             orient: 'vertical',
+                    //             feature: {restore: {}, saveAsImage: {}}
+                    //         },
+                    //         grid: [{
+                    //             top: 70,
+                    //             bottom: '56%',
+                    //             show: true,
+                    //             borderWidth: 4
+                    //         },
+                    //
+                    //             {
+                    //                 top: '56%',
+                    //                 bottom: 70,
+                    //                 show: true,
+                    //                 borderWidth: 4
+                    //             }
+                    //         ],
+                    //         xAxis: [{
+                    //             type: 'category',
+                    //             name: 'Lag',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //             axisTick: {show: false},
+                    //             data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'],
+                    //             gridIndex: 0,
+                    //             nameLocation: 'middle',
+                    //             fontSize: 18,
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //             nameGap: 30
+                    //         },
+                    //
+                    //             {
+                    //                 type: 'category',
+                    //                 name: 'Lag',
+                    //                 axisLine: {show: true, lineStyle: {width: 3}},
+                    //                 axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //                 axisTick: {show: false},
+                    //                 data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17'],
+                    //                 gridIndex: 1,
+                    //                 nameLocation: 'middle',
+                    //                 fontSize: 18,
+                    //                 nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //                 nameGap: 30
+                    //             }
+                    //         ],
+                    //
+                    //         yAxis: [{
+                    //             name: 'ACF',
+                    //             gridIndex: 0,
+                    //             nameLocation: 'middle',
+                    //             min: -0.4,
+                    //             max: 0.8,
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //             axisTick: {show: true},
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //             nameGap: 35
+                    //         },
+                    //
+                    //             {
+                    //                 name: 'Partial ACF',
+                    //                 gridIndex: 1,
+                    //                 nameLocation: 'middle',
+                    //                 min: -0.4,
+                    //                 max: 0.8,
+                    //                 axisLine: {show: true, lineStyle: {width: 3}},
+                    //                 axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //                 axisTick: {show: true},
+                    //                 splitLine: {show: false},
+                    //                 nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //                 nameGap: 35
+                    //             }
+                    //         ],
+                    //
+                    //         series: [{
+                    //             type: 'bar',
+                    //             barWidth: 3,
+                    //             itemStyle: {color: '#0c66ee'},
+                    //             xAxisIndex: 0,
+                    //             yAxisIndex: 0,
+                    //             data: [0.70786683, 0.46075469, 0.5468378, 0.70684821, 0.53644352, 0.33437543, 0.43371491,
+                    //                 0.57763816, 0.41457971, 0.21815018, 0.26869885, 0.33820689, 0.2173571, 0.06146998,
+                    //                 0.10072772, 0.19732847, 0.09704908],
+                    //             markLine: {
+                    //                 lineStyle: {type: 'dashed', color: '#e94371'},
+                    //                 symbol: 'none',
+                    //                 label: {show: false},
+                    //                 data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                    //             }
+                    //         },
+                    //
+                    //
+                    //             {
+                    //                 type: 'bar',
+                    //                 barWidth: 3,
+                    //                 itemStyle: {color: '#e94371'},
+                    //                 xAxisIndex: 1,
+                    //                 yAxisIndex: 1,
+                    //                 data: [0.707866829, -0.080815334, 0.507465036, 0.33410065, -0.271967704, -0.019152841,
+                    //                     0.221846907, 0.021432869, -0.195041289, -0.002072154, -0.052266075, -0.208960742,
+                    //                     0.045021606, -0.036262514, -0.086517495, 0.120946076, -0.05836773],
+                    //                 markLine: {
+                    //                     lineStyle: {type: 'dashed', color: '#0c66ee'},
+                    //                     symbol: 'none', label: {show: false},
+                    //                     data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                    //                 }
+                    //             }
+                    //         ]
+                    //     };
+                    acf.setOption(option);
+                }
+            </script>
+            <div id="spectrum1">
+            </div>
+            <script>
+                {
+                    let spec = echarts.init(document.getElementById("spectrum1"));
+                    let specData = [[0.0166666700, 692.210964], [0.0333333300, 18.959724], [0.0500000000, 126.50001],
+                        [0.0666666700, 135.3288050000], [0.0833333300, 100.5147410000], [0.1000000000, 82.2486340000],
+                        [0.1166666700, 83.1721020000], [0.1333333300, 20.5355990000], [0.1500000000, 107.8649170000],
+                        [0.1666666700, 28.3154030000], [0.1833333300, 44.5554260000], [0.2000000000, 89.4679840000],
+                        [0.2166666700, 196.9790490000], [0.2333333300, 333.0472140000], [0.2500000000, 1513.5677810000],
+                        [0.2666666700, 265.2121530000], [0.2833333300, 82.9563310000], [0.3000000000, 1.3202340000],
+                        [0.3166666700, 9.7395840000], [0.3333333300, 25.5469850000], [0.3500000000, 1.9604480000],
+                        [0.3666666700, 69.2962430000], [0.3833333300, 70.8179990000], [0.4000000000, 3.5184620000],
+                        [0.4166666700, 53.1274210000], [0.4333333300, 64.8083090000], [0.4500000000, 13.2864970000],
+                        [0.4666666700, 38.2420720000], [0.4833333300, 54.6436770000], [0.5000000000, 71.4977970000]];
+                    let option;
+                    // if(isEnglishEnvironment())
+                        option = {
+                        title: {
+                            text: 'Feature mining: periodic analysis for rabies incidence',
+                            fontWeight: 'bold',
+                            textStyle: {color: 'black', fontSize: 20},
+                            backgroundColor: '#eceef1'
+                        },
+                        tooltip: {trigger: 'none', axisPointer: {type: 'cross'}},
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            feature: {restore: {}, saveAsImage: {}}
+                        },
+                        grid: {top: 70, bottom: 50},
+                        xAxis: {
+                            name: 'frequency',
+                            type: 'value',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13},
+                            axisTick: {show: false},
+                            nameLocation: 'middle',
+                            fontSize: 18,
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap: 30
+                        },
+                        yAxis: {
+                            name: 'spectrum',
+                            type: 'value',
+                            max: 1550,
+                            nameLocation: 'middle',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13},
+                            axisTick: {show: true},
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap: 40
+                        },
+                        series: {
+                            type: 'line',
+                            data: specData,
+                            markLine: {
+                                lineStyle: {type: 'dashed', color: 'red'},
+                                symbol: 'none',
+                                label: {show: false},
+                                data: [[
+                                    { coord: [0.25, 0]},
+                                    { coord: [0.25, 1500]}
+                                ]]
+                            }
+                        }
+                    };
+                    // else
+                    //     option = {
+                    //         title: {
+                    //             text: '特征挖掘: 狂犬病发病的周期性分析',
+                    //             fontWeight: 'bold',
+                    //             textStyle: {color: 'black', fontSize: 20},
+                    //             backgroundColor: '#eceef1'
+                    //         },
+                    //         tooltip: {trigger: 'none', axisPointer: {type: 'cross'}},
+                    //         toolbox: {
+                    //             show: true,
+                    //             orient: 'vertical',
+                    //             feature: {restore: {}, saveAsImage: {}}
+                    //         },
+                    //         grid: {top: 70, bottom: 50},
+                    //         xAxis: {
+                    //             name: '频率',
+                    //             type: 'value',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13},
+                    //             axisTick: {show: false},
+                    //             nameLocation: 'middle',
+                    //             fontSize: 18,
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap: 30
+                    //         },
+                    //         yAxis: {
+                    //             name: '谱密度',
+                    //             type: 'value',
+                    //             max: 1550,
+                    //             nameLocation: 'middle',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13},
+                    //             axisTick: {show: true},
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap: 40
+                    //         },
+                    //         series: {
+                    //             type: 'line',
+                    //             data: specData,
+                    //             markLine: {
+                    //                 lineStyle: {type: 'dashed', color: 'red'},
+                    //                 symbol: 'none',
+                    //                 label: {show: false},
+                    //                 data: [[
+                    //                     { coord: [0.25, 0]},
+                    //                     { coord: [0.25, 1500]}
+                    //                 ]]
+                    //             }
+                    //         }
+                    //     };
+                    spec.setOption(option);
+                }
+            </script>
+           <!-- <div id="diagnose1">
+                <h3 class="diagnose-title">
+                Model diagnose: the optimal model for human rabies - SARIMA(2,0,0)(1,1,0)<sub>4</sub>
+                </h3>
+                <img class='diagnose' src="images/diagnose.svg" , alt="model diagnose">
+            </div>-->
+            <div id="arima1">
+            </div>
+            <script>
+                {
+                    let arima = echarts.init(document.getElementById("arima1"));
+
+                    let option;
+                    // if(isEnglishEnvironment())
+                        option = {
+                        title: {
+                            text: 'Real, fitted and prediction value of rabies incidence in 3 years ',
+                            fontWeight: 'bold',
+                            textStyle: {color: 'black', fontSize: 20},
+                            backgroundColor: '#eceef1'
+                        },
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            feature: {
+                                restore: {},
+                                saveAsImage: {}
+                            },
+
+                        },
+                        grid: {top: 80, bottom: 50, width: '80%', height: '64%'},
+                        legend: {show: true, right: '10%', top: '10%', textStyle: {fontSize: 14},
+                            data: ['real value', 'fitted value', 'prediction value']},
+                        dataZoom: {xAxisIndex: 0},
+                        xAxis: {
+                            name: 'quarter-year',
+                            type: 'category',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13, rotate: 60,},
+                            axisTick: {show: false},
+                            nameLocation: 'middle',
+                            fontSize: 18,
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap:78,
+                            boundaryGap: false,
+                            data: ['Qtr1-2004', 'Qtr2-2004', 'Qtr3-2004', 'Qtr4-2004',
+                                'Qtr1-2005', 'Qtr2-2005', 'Qtr3-2005', 'Qtr4-2005',
+                                'Qtr1-2006', 'Qtr2-2006', 'Qtr3-2006', 'Qtr4-2006',
+                                'Qtr1-2007', 'Qtr2-2007', 'Qtr3-2007', 'Qtr4-2007',
+                                'Qtr1-2008', 'Qtr2-2008', 'Qtr3-2008', 'Qtr4-2008',
+                                'Qtr1-2009', 'Qtr2-2009', 'Qtr3-2009', 'Qtr4-2009',
+                                'Qtr1-2010', 'Qtr2-2010', 'Qtr3-2010', 'Qtr4-2010',
+                                'Qtr1-2011', 'Qtr2-2011', 'Qtr3-2011', 'Qtr4-2011',
+                                'Qtr1-2012', 'Qtr2-2012', 'Qtr3-2012', 'Qtr4-2012',
+                                'Qtr1-2013', 'Qtr2-2013', 'Qtr3-2013', 'Qtr4-2013',
+                                'Qtr1-2014', 'Qtr2-2014', 'Qtr3-2014', 'Qtr4-2014',
+                                'Qtr1-2015', 'Qtr2-2015', 'Qtr3-2015', 'Qtr4-2015',
+                                'Qtr1-2016', 'Qtr2-2016', 'Qtr3-2016', 'Qtr4-2016',
+                                'Qtr1-2017', 'Qtr2-2017', 'Qtr3-2017', 'Qtr4-2017',
+                                'Qtr1-2018', 'Qtr2-2018', 'Qtr3-2018', 'Qtr4-2018',
+                                'Qtr1-2019', 'Qtr2-2019', 'Qtr3-2019', 'Qtr4-2019',
+                                'Qtr1-2020', 'Qtr2-2020', 'Qtr3-2020', 'Qtr4-2020',
+                                'Qtr1-2021', 'Qtr2-2021', 'Qtr3-2021', 'Qtr4-2021']
+                        },
+                        yAxis: {
+                            name: 'number of rabies incidence',
+                            type: 'value',
+                            nameLocation: 'middle',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13},
+                            axisTick: {show: true},
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap: 40
+                        },
+                        series: [
+                            {
+                                name: 'real value',
+                                type: 'line',
+                                data: [26, 56, 78, 64, 29, 27, 60, 68, 26, 52, 70, 70, 29, 37, 42, 43, 10, 20, 36,
+                                    24, 24, 20, 42, 34, 11, 23, 25, 25, 20, 16, 24, 26, 7, 9, 21, 19, 8, 6, 14, 11,
+                                    7, 6, 12, 14, 8, 7, 8, 14, 7, 11, 7, 12, 6, 11, 10, 11, 8, 8, 9]
+                            },
+                            {
+                                name: 'fitted value',
+                                type: 'line',
+                                data: [26, 56, 78, 64, 27, 52, 68, 56, 23, 44, 73, 68, 29, 39, 64, 60, 10, 31, 43, 42,
+                                    1, 20, 37, 33, 16, 18, 38, 24, 13, 21, 34, 24, 9, 16, 18, 20, 11, 9, 18, 18, 0, 4,
+                                    17, 13, 5, 6, 14, 11, 6, 7, 10, 14, 5, 6, 10, 12, 9, 6, 12, 8]
+                            },
+                            {
+                                name: 'prediction value',
+                                type: 'line',
+                                itemStyle: {color: '#ee0c0c'},
+                                data: [['Qtr1-2019', 11], ['Qtr2-2019', 7],['Qtr3-2019', 10], ['Qtr4-2019', 10],
+                                    ['Qtr1-2020', 11], ['Qtr2-2020', 7], ['Qtr3-2020', 9], ['Qtr4-2020', 9],
+                                    ['Qtr1-2021', 11], ['Qtr2-2021', 7], ['Qtr3-2021', 9], ['Qtr4-2021',9]]
+                            }
+                        ],
+                    };
+                    // else
+                    //     option = {
+                    //         title: {
+                    //             text: '狂犬病发病人数实际值、拟合值及未来三年的预测值',
+                    //             fontWeight: 'bold',
+                    //             textStyle: {color: 'black', fontSize: 20},
+                    //             backgroundColor: '#eceef1'
+                    //         },
+                    //         toolbox: {
+                    //             show: true,
+                    //             orient: 'vertical',
+                    //             feature: {
+                    //                 restore: {},
+                    //                 saveAsImage: {}
+                    //             },
+                    //
+                    //         },
+                    //         grid: {top: 80, bottom: 50, width: '80%', height: '64%'},
+                    //         legend: {show: true, right: '10%', top: '10%', textStyle: {fontSize: 14},
+                    //             data: ['real value', 'fitted value', 'prediction value']},
+                    //         dataZoom: {xAxisIndex: 0},
+                    //         xAxis: {
+                    //             name: '季度-年份',
+                    //             type: 'category',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13, rotate: 60,},
+                    //             axisTick: {show: false},
+                    //             nameLocation: 'middle',
+                    //             fontSize: 18,
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap:78,
+                    //             boundaryGap: false,
+                    //             data: ['Qtr1-2004', 'Qtr2-2004', 'Qtr3-2004', 'Qtr4-2004',
+                    //                 'Qtr1-2005', 'Qtr2-2005', 'Qtr3-2005', 'Qtr4-2005',
+                    //                 'Qtr1-2006', 'Qtr2-2006', 'Qtr3-2006', 'Qtr4-2006',
+                    //                 'Qtr1-2007', 'Qtr2-2007', 'Qtr3-2007', 'Qtr4-2007',
+                    //                 'Qtr1-2008', 'Qtr2-2008', 'Qtr3-2008', 'Qtr4-2008',
+                    //                 'Qtr1-2009', 'Qtr2-2009', 'Qtr3-2009', 'Qtr4-2009',
+                    //                 'Qtr1-2010', 'Qtr2-2010', 'Qtr3-2010', 'Qtr4-2010',
+                    //                 'Qtr1-2011', 'Qtr2-2011', 'Qtr3-2011', 'Qtr4-2011',
+                    //                 'Qtr1-2012', 'Qtr2-2012', 'Qtr3-2012', 'Qtr4-2012',
+                    //                 'Qtr1-2013', 'Qtr2-2013', 'Qtr3-2013', 'Qtr4-2013',
+                    //                 'Qtr1-2014', 'Qtr2-2014', 'Qtr3-2014', 'Qtr4-2014',
+                    //                 'Qtr1-2015', 'Qtr2-2015', 'Qtr3-2015', 'Qtr4-2015',
+                    //                 'Qtr1-2016', 'Qtr2-2016', 'Qtr3-2016', 'Qtr4-2016',
+                    //                 'Qtr1-2017', 'Qtr2-2017', 'Qtr3-2017', 'Qtr4-2017',
+                    //                 'Qtr1-2018', 'Qtr2-2018', 'Qtr3-2018', 'Qtr4-2018',
+                    //                 'Qtr1-2019', 'Qtr2-2019', 'Qtr3-2019', 'Qtr4-2019',
+                    //                 'Qtr1-2020', 'Qtr2-2020', 'Qtr3-2020', 'Qtr4-2020',
+                    //                 'Qtr1-2021', 'Qtr2-2021', 'Qtr3-2021', 'Qtr4-2021']
+                    //         },
+                    //         yAxis: {
+                    //             name: '狂犬病发病人数',
+                    //             type: 'value',
+                    //             nameLocation: 'middle',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13},
+                    //             axisTick: {show: true},
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap: 40
+                    //         },
+                    //         series: [
+                    //             {
+                    //                 name: '实际值',
+                    //                 type: 'line',
+                    //                 data: [26, 56, 78, 64, 29, 27, 60, 68, 26, 52, 70, 70, 29, 37, 42, 43, 10, 20, 36,
+                    //                     24, 24, 20, 42, 34, 11, 23, 25, 25, 20, 16, 24, 26, 7, 9, 21, 19, 8, 6, 14, 11,
+                    //                     7, 6, 12, 14, 8, 7, 8, 14, 7, 11, 7, 12, 6, 11, 10, 11, 8, 8, 9]
+                    //             },
+                    //             {
+                    //                 name: '拟合值',
+                    //                 type: 'line',
+                    //                 data: [26, 56, 78, 64, 27, 52, 68, 56, 23, 44, 73, 68, 29, 39, 64, 60, 10, 31, 43, 42,
+                    //                     1, 20, 37, 33, 16, 18, 38, 24, 13, 21, 34, 24, 9, 16, 18, 20, 11, 9, 18, 18, 0, 4,
+                    //                     17, 13, 5, 6, 14, 11, 6, 7, 10, 14, 5, 6, 10, 12, 9, 6, 12, 8]
+                    //             },
+                    //             {
+                    //                 name: '预测值',
+                    //                 type: 'line',
+                    //                 itemStyle: {color: '#ee0c0c'},
+                    //                 data: [['Qtr1-2019', 11], ['Qtr2-2019', 7],['Qtr3-2019', 10], ['Qtr4-2019', 10],
+                    //                     ['Qtr1-2020', 11], ['Qtr2-2020', 7], ['Qtr3-2020', 9], ['Qtr4-2020', 9],
+                    //                     ['Qtr1-2021', 11], ['Qtr2-2021', 7], ['Qtr3-2021', 9], ['Qtr4-2021',9]]
+                    //             }
+                    //         ],
+                    //     };
+                    arima.setOption(option);
+                }
+            </script>
+        </div>
+        <div class="container">
+            <!--暴露数据平稳性分析-->
+            <div id="acf2">
+
+            </div>
+            <script>
+                {
+                    let acf = echarts.init(document.getElementById("acf2"));
+                    let option;
+                    // if(isEnglishEnvironment())
+                        option = {
+                        title: {
+                            text: 'Feature mining: stability analysis for rabies exposure',
+                            fontWeight: 'bold',
+                            textStyle: {color: 'black', fontSize: 20},
+                            backgroundColor: '#eceef1'
+                        },
+                        tooltip: {},
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            feature: {restore: {}, saveAsImage: {}}
+                        },
+                        grid: [{
+                            top: 70,
+                            bottom: '56%',
+                            show: true,
+                            borderWidth: 4
+                        },
+
+                            {
+                                top: '56%',
+                                bottom: 70,
+                                show: true,
+                                borderWidth: 4
+                            }
+                        ],
+                        dataZoom: {xAxisIndex: [0, 1]},
+                        xAxis: [{
+                            type: 'category',
+                            name: 'Lag',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                            axisTick: {show: false},
+                            data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                            gridIndex: 0,
+                            nameLocation: 'middle',
+                            fontSize: 18,
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                            nameGap: 30
+                        },
+
+                            {
+                                type: 'category',
+                                name: 'Lag',
+                                axisLine: {show: true, lineStyle: {width: 3}},
+                                axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                                axisTick: {show: false},
+                                data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                                gridIndex: 1,
+                                nameLocation: 'middle',
+                                fontSize: 18,
+                                nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                                nameGap: 30
+                            }
+                        ],
+
+                        yAxis: [{
+                            name: 'ACF',
+                            gridIndex: 0,
+                            nameLocation: 'middle',
+                            min: -0.4,
+                            max: 0.8,
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                            axisTick: {show: true},
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                            nameGap: 35
+                        },
+
+                            {
+                                name: 'Partial ACF',
+                                gridIndex: 1,
+                                nameLocation: 'middle',
+                                min: -0.4,
+                                max: 0.8,
+                                axisLine: {show: true, lineStyle: {width: 3}},
+                                axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                                axisTick: {show: true},
+                                splitLine: {show: false},
+                                nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                                nameGap: 35
+                            }
+                        ],
+
+                        series: [{
+                            type: 'bar',
+                            barWidth: 3,
+                            itemStyle: {color: '#0c66ee'},
+                            xAxisIndex: 0,
+                            yAxisIndex: 0,
+                            data: [0.451071616, -0.054649229, 0.342292564, 0.713445305, 0.230378059,
+                                -0.189464831, 0.15172477, 0.46418611, 0.063493141, -0.252330305,
+                                0.042237043, 0.271036471, -0.068086163, -0.311974101, -0.034288051
+                            ],
+                            markLine: {
+                                lineStyle: {type: 'dashed', color: '#e94371'},
+                                symbol: 'none',
+                                label: {show: false},
+                                data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                            }
+                        },
+
+
+                            {
+                                type: 'bar',
+                                barWidth: 3,
+                                itemStyle: {color: '#e94371'},
+                                xAxisIndex: 1,
+                                yAxisIndex: 1,
+                                data: [0.451071616, -0.324047313, 0.730965009, 0.170645955
+                                   , -0.3245286, -0.05201546, -0.068469966, 0.062566646
+                                   , -0.072816942, 0.089336973, -0.12133777, -0.035161109
+                                   , -0.080773276, -0.036595185, 0.047071742],
+                                markLine: {
+                                    lineStyle: {type: 'dashed', color: '#0c66ee'},
+                                    symbol: 'none', label: {show: false},
+                                    data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                                }
+                            }
+                        ]
+                    };
+                    // else
+                    //     option = {
+                    //     title: {
+                    //         text: '特征挖掘: 狂犬病暴露平稳性分析',
+                    //         fontWeight: 'bold',
+                    //         textStyle: {color: 'black', fontSize: 20},
+                    //         backgroundColor: '#eceef1'
+                    //     },
+                    //     tooltip: {},
+                    //     toolbox: {
+                    //         show: true,
+                    //         orient: 'vertical',
+                    //         feature: {restore: {}, saveAsImage: {}}
+                    //     },
+                    //     grid: [{
+                    //         top: 70,
+                    //         bottom: '56%',
+                    //         show: true,
+                    //         borderWidth: 4
+                    //     },
+                    //
+                    //         {
+                    //             top: '56%',
+                    //             bottom: 70,
+                    //             show: true,
+                    //             borderWidth: 4
+                    //         }
+                    //     ],
+                    //     dataZoom: {xAxisIndex: [0, 1]},
+                    //     xAxis: [{
+                    //         type: 'category',
+                    //         name: 'Lag',
+                    //         axisLine: {show: true, lineStyle: {width: 3}},
+                    //         axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //         axisTick: {show: false},
+                    //         data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                    //         gridIndex: 0,
+                    //         nameLocation: 'middle',
+                    //         fontSize: 18,
+                    //         nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //         nameGap: 30
+                    //     },
+                    //
+                    //         {
+                    //             type: 'category',
+                    //             name: 'Lag',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //             axisTick: {show: false},
+                    //             data: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                    //             gridIndex: 1,
+                    //             nameLocation: 'middle',
+                    //             fontSize: 18,
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //             nameGap: 30
+                    //         }
+                    //     ],
+                    //
+                    //     yAxis: [{
+                    //         name: 'ACF',
+                    //         gridIndex: 0,
+                    //         nameLocation: 'middle',
+                    //         min: -0.4,
+                    //         max: 0.8,
+                    //         axisLine: {show: true, lineStyle: {width: 3}},
+                    //         axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //         axisTick: {show: true},
+                    //         splitLine: {show: false},
+                    //         nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //         nameGap: 35
+                    //     },
+                    //
+                    //         {
+                    //             name: 'Partial ACF',
+                    //             gridIndex: 1,
+                    //             nameLocation: 'middle',
+                    //             min: -0.4,
+                    //             max: 0.8,
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13, interval: 1},
+                    //             axisTick: {show: true},
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 13},
+                    //             nameGap: 35
+                    //         }
+                    //     ],
+                    //
+                    //     series: [{
+                    //         type: 'bar',
+                    //         barWidth: 3,
+                    //         itemStyle: {color: '#0c66ee'},
+                    //         xAxisIndex: 0,
+                    //         yAxisIndex: 0,
+                    //         data: [0.451071616, -0.054649229, 0.342292564, 0.713445305, 0.230378059,
+                    //             -0.189464831, 0.15172477, 0.46418611, 0.063493141, -0.252330305,
+                    //             0.042237043, 0.271036471, -0.068086163, -0.311974101, -0.034288051
+                    //         ],
+                    //         markLine: {
+                    //             lineStyle: {type: 'dashed', color: '#e94371'},
+                    //             symbol: 'none',
+                    //             label: {show: false},
+                    //             data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                    //         }
+                    //     },
+                    //
+                    //
+                    //         {
+                    //             type: 'bar',
+                    //             barWidth: 3,
+                    //             itemStyle: {color: '#e94371'},
+                    //             xAxisIndex: 1,
+                    //             yAxisIndex: 1,
+                    //             data: [0.451071616, -0.324047313, 0.730965009, 0.170645955
+                    //                 , -0.3245286, -0.05201546, -0.068469966, 0.062566646
+                    //                 , -0.072816942, 0.089336973, -0.12133777, -0.035161109
+                    //                 , -0.080773276, -0.036595185, 0.047071742],
+                    //             markLine: {
+                    //                 lineStyle: {type: 'dashed', color: '#0c66ee'},
+                    //                 symbol: 'none', label: {show: false},
+                    //                 data: [{yAxis: 0.24}, {yAxis: -0.24}]
+                    //             }
+                    //         }
+                    //     ]
+                    // };
+
+                    acf.setOption(option);
+                }
+            </script>
+            <div id="spectrum2">
+
+            </div>
+            <script>
+                {
+                    let spec = echarts.init(document.getElementById("spectrum2"));
+                    let specData = [[0.027777778, 1040270713], [0.055555556, 12762743.59],
+                        [0.083333333, 68439271.53], [0.111111111, 33034351.34], [0.138888889, 3245972.259],
+                        [0.166666667, 2645846.014], [0.194444444, 6655345.106], [0.222222222, 244212598.8],
+                        [0.25, 5558441248], [0.277777778, 41948459], [0.305555556, 31350662.62],
+                        [0.333333333, 44006259.29], [0.361111111, 6208897.42], [0.388888889, 3126420.705],
+                        [0.416666667, 5588179.051], [0.444444444, 11079089.25], [0.472222222, 63837189.06],
+                        [0.5, 21312.7682]];
+                    let option;
+                    // if(isEnglishEnvironment())
+                        option = {
+                        title: {
+                            text: 'Feature mining: periodic analysis for rabies exposure',
+                            fontWeight: 'bold',
+                            textStyle: {color: 'black', fontSize: 20},
+                            backgroundColor: '#eceef1'
+                        },
+                        tooltip: {trigger: 'none', axisPointer: {type: 'cross'}},
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            feature: {restore: {}, saveAsImage: {}}
+                        },
+                        grid: {top: 70, bottom: 50, left: '17%'},
+                        xAxis: {
+                            name: 'frequency',
+                            type: 'value',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13},
+                            axisTick: {show: false},
+                            nameLocation: 'middle',
+                            fontSize: 18,
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap: 30
+                        },
+                        yAxis: {
+                            name: 'spectrum',
+                            type: 'value',
+                            max: 6000000000,
+                            nameLocation: 'middle',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13},
+                            axisTick: {show: true},
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap: 120
+                        },
+                        series: {
+                            type: 'line',
+                            data: specData,
+                            markLine: {
+                                lineStyle: {type: 'dashed', color: 'red'},
+                                symbol: 'none',
+                                label: {show: false},
+                                data: [[
+                                    { coord: [0.25, 0]},
+                                    { coord: [0.25, 5558441248]}
+                                ]]
+                            }
+                        }
+                    }
+                    // else
+                    //     option = {
+                    //         title: {
+                    //             text: '特征挖掘：狂犬病暴露的周期性分析',
+                    //             fontWeight: 'bold',
+                    //             textStyle: {color: 'black', fontSize: 20},
+                    //             backgroundColor: '#eceef1'
+                    //         },
+                    //         tooltip: {trigger: 'none', axisPointer: {type: 'cross'}},
+                    //         toolbox: {
+                    //             show: true,
+                    //             orient: 'vertical',
+                    //             feature: {restore: {}, saveAsImage: {}}
+                    //         },
+                    //         grid: {top: 70, bottom: 50, left: '17%'},
+                    //         xAxis: {
+                    //             name: '频率',
+                    //             type: 'value',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13},
+                    //             axisTick: {show: false},
+                    //             nameLocation: 'middle',
+                    //             fontSize: 18,
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap: 30
+                    //         },
+                    //         yAxis: {
+                    //             name: '谱密度',
+                    //             type: 'value',
+                    //             max: 6000000000,
+                    //             nameLocation: 'middle',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13},
+                    //             axisTick: {show: true},
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap: 120
+                    //         },
+                    //         series: {
+                    //             type: 'line',
+                    //             data: specData,
+                    //             markLine: {
+                    //                 lineStyle: {type: 'dashed', color: 'red'},
+                    //                 symbol: 'none',
+                    //                 label: {show: false},
+                    //                 data: [[
+                    //                     { coord: [0.25, 0]},
+                    //                     { coord: [0.25, 5558441248]}
+                    //                 ]]
+                    //             }
+                    //         }
+                    //     }
+                    spec.setOption(option);
+                }
+            </script>
+           <!-- <div id="diagnose2">
+                <h3 class="diagnose-title">
+                 Model diagnose: the optimal model for prophylactic vaccination - SARIMA(2,0,0)(1,1,0)<sub>4</sub>
+                </h3>
+                <img class='diagnose' src="images/diagnose.svg" , alt="model diagnose">
+            </div>-->
+            <div id="arima2">
+
+            </div>
+            <script>
+                {
+                    let arima = echarts.init(document.getElementById("arima2"));
+
+                    let option;
+                    // if(isEnglishEnvironment())
+                        option = {
+                        title: {
+                            text: 'Real, fitted and prediction value of rabies exposure in 3 years ',
+                            fontWeight: 'bold',
+                            textStyle: {color: 'black', fontSize: 20},
+                            backgroundColor: '#eceef1'
+                        },
+                        toolbox: {
+                            show: true,
+                            orient: 'vertical',
+                            feature: {
+                                restore: {},
+                                saveAsImage: {}
+                            },
+
+                        },
+                        grid: {top: 80, bottom: 50, left: '16%', width: '80%', height: '64%'},
+                        legend: {show: true, right: '10%', top: '10%', textStyle: {fontSize: 14},
+                            data: ['real value', 'fitted value', 'prediction value']},
+                        dataZoom: {xAxisIndex: 0},
+                        xAxis: {
+                            name: 'quarter-year',
+                            type: 'category',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13, rotate: 60,},
+                            axisTick: {show: false},
+                            nameLocation: 'middle',
+                            fontSize: 18,
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap:78,
+                            boundaryGap: false,
+                            data: ['Qtr1-2010', 'Qtr2-2010', 'Qtr3-2010', 'Qtr4-2010',
+                                'Qtr1-2011', 'Qtr2-2011', 'Qtr3-2011', 'Qtr4-2011',
+                                'Qtr1-2012', 'Qtr2-2012', 'Qtr3-2012', 'Qtr4-2012',
+                                'Qtr1-2013', 'Qtr2-2013', 'Qtr3-2013', 'Qtr4-2013',
+                                'Qtr1-2014', 'Qtr2-2014', 'Qtr3-2014', 'Qtr4-2014',
+                                'Qtr1-2015', 'Qtr2-2015', 'Qtr3-2015', 'Qtr4-2015',
+                                'Qtr1-2016', 'Qtr2-2016', 'Qtr3-2016', 'Qtr4-2016',
+                                'Qtr1-2017', 'Qtr2-2017', 'Qtr3-2017', 'Qtr4-2017',
+                                'Qtr1-2018', 'Qtr2-2018', 'Qtr3-2018', 'Qtr4-2018',
+                                'Qtr1-2019', 'Qtr2-2019', 'Qtr3-2019', 'Qtr4-2019',
+                                'Qtr1-2020', 'Qtr2-2020', 'Qtr3-2020', 'Qtr4-2020',
+                                'Qtr1-2021', 'Qtr2-2021', 'Qtr3-2021', 'Qtr4-2021']
+                        },
+                        yAxis: {
+                            name: 'number of rabies exposure',
+                            type: 'value',
+                            nameLocation: 'middle',
+                            axisLine: {show: true, lineStyle: {width: 3}},
+                            axisLabel: {show: true, color: 'black', fontSize: 13},
+                            axisTick: {show: true},
+                            splitLine: {show: false},
+                            nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                            nameGap: 100
+                        },
+                        series: [
+                            {
+                                name: 'real value',
+                                type: 'line',
+                                data: [52959, 84581, 95533, 65338, 56782, 92635, 108201, 80204
+                                    , 55366, 93764, 98661, 73069, 56798, 87174, 93483, 77635
+                                    , 61009, 90457, 98334, 72418, 72474, 102664, 109416, 77240
+                                    , 79652, 112248, 126663, 88169, 86449, 129947, 147112, 103904
+                                    , 101205, 150450, 158031, 105480]
+                            },
+                            {
+                                name: 'fitted value',
+                                type: 'line',
+                                data: [52928, 84543, 95499, 65370, 56923, 88785, 102099, 75292, 69408
+                                    , 97610, 111081, 76321, 49712, 91969, 94255, 68243, 57086, 89598
+                                    , 96375, 81594, 59971, 96227, 107609, 82677, 79772, 109897, 117929
+                                    , 90509, 91647, 121412, 140475, 105595, 102954, 145500, 165360, 118161]
+                            },
+                            {
+                                name: 'prediction value',
+                                type: 'line',
+                                itemStyle: {color: '#ee0c0c'},
+                                data: [['Qtr1-2019', 108557], ['Qtr2-2019', 157802],['Qtr3-2019', 165383],
+                                    ['Qtr4-2019', 112832], ['Qtr1-2020', 115909], ['Qtr2-2020', 165154],
+                                    ['Qtr3-2020', 172735], ['Qtr4-2020', 120184], ['Qtr1-2021', 123261],
+                                    ['Qtr2-2021', 172506], ['Qtr3-2021', 180087], ['Qtr4-2021',127536]]
+                            }
+                        ],
+                    };
+                    // else
+                    //     option = {
+                    //         title: {
+                    //             text: '狂犬病暴露人数实际值、拟合值及未来三年的预测值',
+                    //             fontWeight: 'bold',
+                    //             textStyle: {color: 'black', fontSize: 20},
+                    //             backgroundColor: '#eceef1'
+                    //         },
+                    //         toolbox: {
+                    //             show: true,
+                    //             orient: 'vertical',
+                    //             feature: {
+                    //                 restore: {},
+                    //                 saveAsImage: {}
+                    //             },
+                    //
+                    //         },
+                    //         grid: {top: 80, bottom: 50, left: '16%', width: '80%', height: '64%'},
+                    //         legend: {show: true, right: '10%', top: '10%', textStyle: {fontSize: 14},
+                    //             data: ['real value', 'fitted value', 'prediction value']},
+                    //         dataZoom: {xAxisIndex: 0},
+                    //         xAxis: {
+                    //             name: '季度-年份',
+                    //             type: 'category',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13, rotate: 60,},
+                    //             axisTick: {show: false},
+                    //             nameLocation: 'middle',
+                    //             fontSize: 18,
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap:78,
+                    //             boundaryGap: false,
+                    //             data: ['Qtr1-2010', 'Qtr2-2010', 'Qtr3-2010', 'Qtr4-2010',
+                    //                 'Qtr1-2011', 'Qtr2-2011', 'Qtr3-2011', 'Qtr4-2011',
+                    //                 'Qtr1-2012', 'Qtr2-2012', 'Qtr3-2012', 'Qtr4-2012',
+                    //                 'Qtr1-2013', 'Qtr2-2013', 'Qtr3-2013', 'Qtr4-2013',
+                    //                 'Qtr1-2014', 'Qtr2-2014', 'Qtr3-2014', 'Qtr4-2014',
+                    //                 'Qtr1-2015', 'Qtr2-2015', 'Qtr3-2015', 'Qtr4-2015',
+                    //                 'Qtr1-2016', 'Qtr2-2016', 'Qtr3-2016', 'Qtr4-2016',
+                    //                 'Qtr1-2017', 'Qtr2-2017', 'Qtr3-2017', 'Qtr4-2017',
+                    //                 'Qtr1-2018', 'Qtr2-2018', 'Qtr3-2018', 'Qtr4-2018',
+                    //                 'Qtr1-2019', 'Qtr2-2019', 'Qtr3-2019', 'Qtr4-2019',
+                    //                 'Qtr1-2020', 'Qtr2-2020', 'Qtr3-2020', 'Qtr4-2020',
+                    //                 'Qtr1-2021', 'Qtr2-2021', 'Qtr3-2021', 'Qtr4-2021']
+                    //         },
+                    //         yAxis: {
+                    //             name: '狂犬病暴露人数',
+                    //             type: 'value',
+                    //             nameLocation: 'middle',
+                    //             axisLine: {show: true, lineStyle: {width: 3}},
+                    //             axisLabel: {show: true, color: 'black', fontSize: 13},
+                    //             axisTick: {show: true},
+                    //             splitLine: {show: false},
+                    //             nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 14},
+                    //             nameGap: 100
+                    //         },
+                    //         series: [
+                    //             {
+                    //                 name: '实际值',
+                    //                 type: 'line',
+                    //                 data: [52959, 84581, 95533, 65338, 56782, 92635, 108201, 80204
+                    //                     , 55366, 93764, 98661, 73069, 56798, 87174, 93483, 77635
+                    //                     , 61009, 90457, 98334, 72418, 72474, 102664, 109416, 77240
+                    //                     , 79652, 112248, 126663, 88169, 86449, 129947, 147112, 103904
+                    //                     , 101205, 150450, 158031, 105480]
+                    //             },
+                    //             {
+                    //                 name: '拟合值',
+                    //                 type: 'line',
+                    //                 data: [52928, 84543, 95499, 65370, 56923, 88785, 102099, 75292, 69408
+                    //                     , 97610, 111081, 76321, 49712, 91969, 94255, 68243, 57086, 89598
+                    //                     , 96375, 81594, 59971, 96227, 107609, 82677, 79772, 109897, 117929
+                    //                     , 90509, 91647, 121412, 140475, 105595, 102954, 145500, 165360, 118161]
+                    //             },
+                    //             {
+                    //                 name: '预测值',
+                    //                 type: 'line',
+                    //                 itemStyle: {color: '#ee0c0c'},
+                    //                 data: [['Qtr1-2019', 108557], ['Qtr2-2019', 157802],['Qtr3-2019', 165383],
+                    //                     ['Qtr4-2019', 112832], ['Qtr1-2020', 115909], ['Qtr2-2020', 165154],
+                    //                     ['Qtr3-2020', 172735], ['Qtr4-2020', 120184], ['Qtr1-2021', 123261],
+                    //                     ['Qtr2-2021', 172506], ['Qtr3-2021', 180087], ['Qtr4-2021',127536]]
+                    //             }
+                    //         ],
+                    //     };
+                    arima.setOption(option);
+                }
+            </script>
+        </div>
+
+        <!--点击对应标签切换到对应图表-->
+        <script>
+            {
+                let category = document.querySelectorAll('.sidebar-content');
+                let tsContent = document.querySelectorAll('.container');
+                for(let i = 0; i < category.length; ++i) {
+                    category[i].setAttribute('index', i);
+                    category[i].addEventListener('click', clickSubnav);
+                   /* category[i].addEventListener('mouseover', overSubnav);
+                    category[i].addEventListener('mouseout', outSubnav);*/
+                }
+                /*function overSubnav(){
+                    this.style.backgroundColor = '#e1dde5';
+                }
+                function outSubnav(){
+                    this.style.backgroundColor = '#faf6fc';
+                }*/
+                function clickSubnav(){
+                    for(let i=0; i<category.length; ++i){
+                        category[i].className = 'sidebar-content';
+                    }
+                    for(let i=0; i<tsContent.length; ++i){
+                        tsContent[i].style.display = 'none';
+                    }
+                    this.className = 'sidebar-content current';
+                    tsContent[this.getAttribute('index')].style.display = 'block';
+                }
+            }
+        </script>
+    </section>
+
+
+</body>
+</html>

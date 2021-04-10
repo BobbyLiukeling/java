@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title class="lang" lang="eng">Prophylactic Vaccination - Temporal Distribution</title>
+    <link rel="stylesheet" type="text/css" href="css/module.css">
+    <!-- 引入 ECharts 文件 -->
+    <script src="js/echarts.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/language_temporalPV.js"></script>
+    <script>
+        //先放置一个空坐标图
+        function emptyTimeVariationByYear(){
+            let myChart = echarts.init(document.getElementById('timeVariationByYear'));
+            myChart.setOption({
+                title: {
+                    text: 'Temporal variation of number of exposed data in an area',
+                    fontWeight: 'bold',
+                    textStyle: {color: 'black', fontSize: 20},
+                    backgroundColor: '#eceef1'
+                },
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    feature: {
+                        restore: {},
+                        saveAsImage: {}
+                    },
+
+                },
+                grid: {
+                    top: 80,
+                    left: '15%',
+                    bottom: 50,
+                    width: '74%',
+                    height: '70%'
+                },
+                xAxis: {
+                    name: 'year',
+                    type: 'category',
+                    axisLine: {show: true, lineStyle: {width: 3}},
+                    nameLocation: 'middle',
+                    nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 18},
+                    nameGap:40,
+                    data: []
+                },
+                yAxis: {
+                    name: 'number',
+                    type: 'value',
+                    nameLocation: 'middle',
+                    nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 18},
+                    nameGap: 40,
+                    axisLine: {show: true, lineStyle: {width: 3}},
+                }
+            })
+        }
+
+        //echarts数据项配置与生成
+        function generateOption(myChart, data, region, startYear, endYear){
+            let timeInTitle = startYear + '-' + endYear;
+            if(startYear===endYear)
+                timeInTitle = startYear;
+            let myOption = {
+                title: {
+                    text: 'Temporal variation of number of exposed data in ' + region + ', ' + timeInTitle,
+                    fontWeight: 'bold',
+                    textStyle: {color: 'black', fontSize: 20},
+                    backgroundColor: '#eceef1'
+                },
+                tooltip: {},
+                toolbox: {
+                    show: true,
+                    orient: 'vertical',
+                    feature: {
+                        restore: {},
+                        saveAsImage: {}
+                    },
+
+                },
+                legend: {
+                    show: true,
+                    right: '10%',
+                    top: '10%',
+                    textStyle: {fontSize: 14},
+                    // data: ['exposed', 'exposed', 'vaccination', 'vaccination']
+                },
+                grid: {
+                    top: '20%',
+                    left: '15%',
+                    bottom: 50,
+                    width: '74%',
+                    height: '60%'
+                },
+                dataZoom: {xAxisIndex: 0},
+                xAxis: {
+                    name: 'time',
+                    type: 'category',
+                    axisLine: {show: true, lineStyle: {width: 3}},
+                    axisLabel: {show: true, color: 'black', fontSize: 16},
+                    axisTick: {show: false},
+                    nameLocation: 'middle',
+                    nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 18},
+                    nameGap:40,
+                    fontSize: 18,
+                    data: getXAxisForTemporal(data)
+                },
+                yAxis: {
+                    name: 'number',
+                    type: 'value',
+                    nameLocation: 'middle',
+                    nameTextStyle: {color: 'black', fontWeight: 'bold', fontSize: 18},
+                    nameGap: 80,
+                    axisLine: {show: true, lineStyle: {width: 3}},
+                    axisLabel: {show: true, color: 'black', fontSize: 16},
+                    axisTick: {show: true},
+                    splitLine: {show: false},
+                },
+                series: [{
+                    name: 'exposed number',
+                    type: 'bar',
+                    itemStyle: {color: '#D53A35'},
+                    data: parseDataForTime(data, 'exposedNum')
+                }, {
+                    name: 'exposed number',
+                    type: 'line',
+                    itemStyle: {color: '#D53A35'},
+                    data: parseDataForTime(data, 'exposedNum')
+                }, {
+                    name: 'vaccination number',
+                    type: 'bar',
+                    itemStyle: {color: '#334B5C'},
+                    data: parseDataForTime(data, 'vaccinationNum')
+                }, {
+                    name: 'vaccination number',
+                    type: 'line',
+                    itemStyle: {color: '#334B5C'},
+                    data: parseDataForTime(data, 'vaccinationNum')
+                }]
+            }
+            myChart.setOption(myOption);
+        }
+        //提交前判断表单合法性，合法则采用ajax提交
+        function checkAndSubmitForYear() {
+            let select = document.querySelectorAll("form select");
+            let selectCity = select[0];
+            let selectStartYear = select[1];
+            let selectEndYear = select[2];
+            let selectUnit = select[3];
+
+            let region = selectCity.options[selectCity.selectedIndex].value;
+            let startYear = selectStartYear.options[selectStartYear.selectedIndex].value;
+            let endYear = selectEndYear.options[selectEndYear.selectedIndex].value;
+            let unit = selectUnit.options[selectUnit.selectedIndex].value;
+
+            let myChart = echarts.init(document.getElementById('timeVariationByYear'));
+            //判断表单选中值是否合法
+            if (region === 'none' || startYear === 'none' || endYear === 'none') {
+                alert('The selection cannot be empty!');
+            } else if (startYear > endYear) {
+                alert('The start time must not be greater than the end time!');
+            } else {
+                let ajax = new XMLHttpRequest();
+                let url = '/rabies/PVTimeYear?region=' + region + '&startYear=' + startYear + '&endYear=' + endYear
+                          + '&unit=' + unit;
+                ajax.open('get', url, true);
+                ajax.send();
+                myChart.showLoading();
+                ajax.onreadystatechange = function () {
+                    if (ajax.readyState == 4 && ajax.status == 200) {
+                        /*获取到数据后 对echarts数据项进行配置！*/
+                        console.log("后台返回数据："+ this.responseText);
+                        let data = eval(this.responseText);//获取到json字符串，还需解析
+                        myChart.hideLoading();
+                        generateOption(myChart, data, region, startYear, endYear);
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<!--头部-->
+<section class="header">
+    <div class="head w">
+        <!--具体模块部分-->
+        <div class="module_title">
+            <a href="timeSeries.html">
+                <h1 class="lang" lang="eng">Prophylactic Vaccination - Temporal Distribution</h1>
+            </a>
+        </div>
+        <!--导航栏部分 nav-->
+        <ul class="nav">
+            <li class="other_modules">
+                <a href="#" class="lang" lang="eng">Other modules<b class="caret"></b></a>
+                <ul class="sub_nav">
+                    <li><a href="temporalPV.html" class="lang" lang="eng">Human Rabies - Temporal Distribution</a></li>
+                    <li><a href="spatialHR.html" class="lang" lang="eng">Human Rabies - Spatial Distribution</a></li>
+                    <li><a href="crowdHR.html" class="lang" lang="eng">Human Rabies - Crowd Distribution</a></li>
+                    <li><a href="spatialPV.html" class="lang" lang="eng">Prophylactic Vaccination - Spatial Distribution</a></li>
+                    <li><a href="timeSeries.html" class="lang" lang="eng">Time Series Analysis</a></li>
+                </ul>
+            </li>
+            <li><a href="index.html" class="lang" lang="eng">Home page</a></li>
+            <li><a class="lang" id="translate" href="#" lang="eng">中文</a></li>
+            <script>
+                //注册监听点击事件
+                let transBtn = document.getElementById('translate');
+                transBtn.onclick = function(){
+                    //英翻中
+                    if(this.getAttribute('lang') === 'eng'){
+                        showLanguage('chi');
+                    }
+                    //中翻英
+                    else{
+                        showLanguage('eng');
+                    }
+                }
+            </script>
+        </ul>
+        <script>
+            let modules = document.querySelector(".other_modules");
+            let sub_nav = document.querySelector(".sub_nav");
+            modules.onmouseover = function (){
+                sub_nav.style.display = 'block';
+            }
+            modules.onmouseout = function (){
+                sub_nav.style.display = 'none';
+            }
+        </script>
+    </div>
+</section>
+
+<!--侧边栏+主内容区-->
+<section class="person-container">
+    <!--条件选择+echarts图表区-->
+    <div class="person-select">
+        <form class="condition">
+            <div class="select-city">
+                <p class="lang" lang="eng">Select region in Hubei Province:&nbsp;&nbsp;</p>
+                <select name="region">
+                    <option value="none" selected disabled hidden class="lang" lang="eng">select region</option>
+                    <option value="Hubei" class="lang" lang="eng">Hubei Province</option>
+                    <option value="Enshi" class="lang" lang="eng">Enshi City </option>
+                    <option value="Ezhou" class="lang" lang="eng">Ezhou City</option>
+                    <option value="Huanggang" class="lang" lang="eng">Huanggang City</option>
+                    <option value="Huangshi" class="lang" lang="eng">Huangshi City</option>
+                    <option value="Jingmen" class="lang" lang="eng">Jingmen City</option>
+                    <option value="Jingzhou" class="lang" lang="eng">Jingzhou City</option>
+                    <option value="Qianjiang" class="lang" lang="eng">Qianjiang City</option>
+                    <option value="Shennongjia" class="lang" lang="eng">Shennongjia City</option>
+                    <option value="Shiyan" class="lang" lang="eng">Shiyan City</option>
+                    <option value="Suizhou" class="lang" lang="eng">Suizhou City</option>
+                    <option value="Tianmen" class="lang" lang="eng">Tianmen City</option>
+                    <option value="Wuhan" class="lang" lang="eng">Wuhan City</option>
+                    <option value="Xiangyang" class="lang" lang="eng">Xiangyang City</option>
+                    <option value="Xianning" class="lang" lang="eng">Xianning City</option>
+                    <option value="Xiantao" class="lang" lang="eng">Xiantao City</option>
+                    <option value="Xiaogan" class="lang" lang="eng">Xiaogan City</option>
+                    <option value="Yichang" class="lang" lang="eng">Yichang City</option>
+                </select>
+            </div>
+            <div class="select-time">
+                <p class="lang" lang="eng">Select time range about year: &nbsp;</p>
+                <select name="startYear">
+                    <option value="none" selected disabled hidden>Year</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+                --
+                <select name="endYear">
+                    <option value="none" selected disabled hidden>Year</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                </select>
+            </div>
+            <div class="select-unit">
+                <p class="lang" lang="eng">Select data unit: </p>
+                <select name="unit">
+                    <option value="Year" class="lang" lang="eng">Year</option>
+                    <option value="Quarter" class="lang" lang="eng">Quarter</option>
+                </select>
+            </div>
+            <div class="submit-button">
+                <button type="button" onclick="checkAndSubmitForYear()" class="lang" lang="eng">query</button>
+            </div>
+        </form>
+
+        <div class="echarts">
+            <div id="timeVariationByYear">
+            </div>
+            <script>
+                //先放置一个空的坐标图
+                emptyTimeVariationByYear();
+            </script>
+        </div>
+    </div>
+</section>
+
+
+
+</body>
+</html>

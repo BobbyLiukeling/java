@@ -1,0 +1,209 @@
+/* 初始化标签在所有浏览器中的margin、padding值 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+p {
+    color: black;
+}
+
+body {
+    background-color: #f1ebf1;
+}
+
+.header {
+    background-color: #80397B;
+    height: 60px;
+}
+
+/*版心*/
+.w {
+    width: 1200px;
+    margin: auto;
+}
+
+.logo {
+    float: left;
+}
+
+.logo h1 {
+    display: block;
+    text-align: center;
+    line-height: 60px;
+    color: #FFFFFF;
+}
+
+.nav {
+    float: right;
+}
+
+.nav ul li {
+    float: left;
+    margin: 0px;
+    height: 60px;
+    border-top: 3px solid #8b0bb8;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: .3s background-color;
+}
+
+.nav ul li a {
+    display: block;
+    height: 60px;
+    line-height: 54px;
+    font-size: 18px;
+    color: #FFFFFF;
+
+}
+
+.nav ul li:hover {
+    border-top: 3px solid #ece7ec;
+    background-color: #580475;
+}
+
+.introduction {
+    overflow: hidden; /*避免父盒子塌陷*/
+    height: 480px;
+    margin-top: 20px;
+}
+
+.image {
+    display: block;
+    float: left;
+    width: 400px;
+    height: 400px;
+    background: url("../images/rabies3.png") no-repeat;
+    background-size: contain;
+    margin: 60px 0;
+}
+
+.word {
+    float: left;
+    width: 800px;
+    height: 400px;
+    margin: 42px 0;
+}
+
+.word h1 {
+    display: block;
+    padding: 40px 160px;
+    color: blueviolet;
+}
+
+.word .info {
+    display: block;
+    padding: 0 90px;
+    margin: 0 auto;
+    font-size: 18px;
+    line-height: 50px;
+    text-indent: 2em;
+}
+
+.word .learn {
+    display: block;
+    width: 118px;
+    height: 40px;
+    border: 2px solid blueviolet;
+    border-radius: 8px;
+    margin: 40px auto;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 36px;
+    color: blueviolet;
+    transition: background-color .3s;
+}
+
+.word .learn:hover {
+    color: white;
+    background-color: #8a2be2;
+}
+
+.module-item {
+    float: left;
+    width: 384px;
+    height: 360px;
+    margin-bottom: 24px;
+    margin-top: 24px;
+    margin-right: 24px;
+    background-color: white;
+    box-shadow: 2px 4px 4px rgba(84, 48, 132, 0.15);
+    /*谁做过渡给谁加*/
+    transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1),
+    box-shadow 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.module-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 6px 10px 10px rgba(84, 48, 132, 0.24);
+}
+
+.module-last {
+    margin-right: 0;
+}
+
+.module-item img {
+    display: block;
+    width: 384px;
+    height: 310px;
+}
+
+.module-item p {
+    display: block;
+    text-align: center;
+    line-height: 50px;
+    border-top: 2px solid #ededef;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    /* 触发 hasLayout */
+    zoom: 1;
+}
+
+.footer {
+    /*overflow: hidden;*/
+    margin-top: 60px;
+    background-color: white;
+    height: 240px;
+}
+
+.contact {
+    float: left;
+    margin-top: 38px;
+    margin-left: 150px;
+    color: black;
+    font-size: 18px;
+}
+
+.contact ul li {
+    line-height: 38px;
+}
+
+.scu {
+    float: right;
+    margin-right: 160px;
+    height: 240px;
+}
+
+.scu img {
+    height: 100%;
+}

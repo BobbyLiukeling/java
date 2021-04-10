@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.visual.repository.RabiesTemporalMapper">
+    <!--结果映射-->
+    <resultMap id="infectedResult" type="NumberAtSomeTime">
+        <result column="year" property="someTime"></result>
+        <result column="infected" property="number"></result>
+    </resultMap>
+
+    <resultMap id="infectedQuarterResult" type="NumberAtSomeTime">
+        <result column="quarter" property="someTime"></result>
+        <result column="infected" property="number"></result>
+    </resultMap>
+
+    <resultMap id="infectedMonthResult" type="NumberAtSomeTime">
+        <result column="month" property="someTime"></result>
+        <result column="infected" property="number"></result>
+    </resultMap>
+
+    <!--结果映射-->
+    <resultMap id="exposedResult" type="PVNumberAtSomeTime">
+        <result column="year" property="someTime"></result>
+        <result column="exposed" property="exposedNum"></result>
+        <result column="vaccination" property="vaccinationNum"></result>
+    </resultMap>
+
+    <resultMap id="exposedQuarterResult" type="PVNumberAtSomeTime">
+        <result column="quarter" property="someTime"></result>
+        <result column="exposed" property="exposedNum"></result>
+        <result column="vaccination" property="vaccinationNum"></result>
+    </resultMap>
+
+    <!--映射语句-->
+    <select id="selectRabiesByYear" resultMap="infectedResult">
+        SELECT year, infected
+        FROM rabies.rabies_in_hubei
+        where city_en = #{region} and year between #{startYear} and #{endYear};
+    </select>
+
+    <select id="selectRabiesByQuarter" resultMap="infectedQuarterResult">
+        SELECT quarter, infected
+        FROM rabies.rabies_in_hubei_quarter
+        WHERE city_en=#{region} and year between #{startYear} and #{endYear};
+    </select>
+
+    <select id="selectRabiesByMonth" resultMap="infectedMonthResult">
+        SELECT month, infected
+        FROM rabies.rabies_in_hubei_month
+        WHERE city_en=#{region} and year between #{startYear} and #{endYear};
+    </select>
+
+    <!--映射语句-->
+    <select id="selectVaccinationByYear" resultMap="exposedResult">
+        SELECT year, exposed, vaccination
+        FROM rabies.rabies_in_hubei
+        where city_en = #{region} and year between #{startYear} and #{endYear};
+    </select>
+
+    <select id="selectVaccinationByQuarter" resultMap="exposedQuarterResult">
+        SELECT quarter, exposed, vaccination
+        FROM rabies.rabies_in_hubei_quarter
+        WHERE city_en=#{region} and year between #{startYear} and #{endYear};
+    </select>
+</mapper>

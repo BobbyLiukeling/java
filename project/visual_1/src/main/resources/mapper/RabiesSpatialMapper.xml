@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.visual.repository.RabiesSpatialMapper">
+    <!--感染结果映射-->
+    <resultMap id="infectedResult" type="NumberOfRegion">
+        <result column="city" property="region"></result>
+        <result column="infected" property="number"></result>
+    </resultMap>
+
+    <!--暴露结果映射-->
+    <resultMap id="exposedResult" type="NumberOfRegion">
+        <result column="city" property="region"></result>
+        <result column="exposed" property="number"></result>
+    </resultMap>
+
+    <!--疫苗结果映射-->
+    <resultMap id="vaccinationResult" type="NumberOfRegion">
+        <result column="city" property="region"></result>
+        <result column="vaccination" property="number"></result>
+    </resultMap>
+
+
+    <!--地区感染查询映射语句-->
+    <select id="selectInfectedOfRegion" resultMap="infectedResult">
+        SELECT city, sum(infected) AS infected
+        FROM rabies.rabies_in_hubei
+        where area_name = #{areaName} and year between #{startYear} and #{endYear}
+        group by city_en;
+    </select>
+
+    <!--地区暴露查询映射语句-->
+    <select id="selectExposedOfRegion" resultMap="exposedResult">
+        SELECT city, sum(exposed) AS exposed
+        FROM rabies.rabies_in_hubei
+        where area_name = #{areaName} and year between #{startYear} and #{endYear}
+        group by city_en;
+    </select>
+
+    <!--地区疫苗查询映射语句-->
+    <select id="selectVaccinationOfRegion" resultMap="vaccinationResult">
+        SELECT city, sum(vaccination) AS vaccination
+        FROM rabies.rabies_in_hubei
+        where area_name = #{areaName} and year between #{startYear} and #{endYear}
+        group by city_en;
+    </select>
+
+
+</mapper>

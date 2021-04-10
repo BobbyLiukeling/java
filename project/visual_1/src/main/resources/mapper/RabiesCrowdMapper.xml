@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.visual.repository.RabiesCrowdMapper">
+    <!--人群数据结果映射-->
+    <resultMap id="crowdResult" type="NumberForPerson">
+        <result column="infant" property="infant"></result>
+        <result column="children" property="children"></result>
+        <result column="teenager" property="teenager"></result>
+        <result column="youth" property="youth"></result>
+        <result column="middle_age" property="middleAge"></result>
+        <result column="agedness" property="agedness"></result>
+        <result column="male" property="male"></result>
+        <result column="female" property="female"></result>
+    </resultMap>
+
+    <!--地区感染查询映射语句-->
+    <select id="selectPersonData" resultMap="crowdResult">
+        SELECT sum(infant) AS infant, sum(children) AS children, sum(teenager) AS teenager,
+        sum(youth) AS youth, sum(middle_age) AS middle_age, sum(agedness) AS agedness,
+        sum(male) AS male, sum(female) AS female
+        FROM rabies.person_data
+        where year between #{startYear} and #{endYear}
+    </select>
+</mapper>

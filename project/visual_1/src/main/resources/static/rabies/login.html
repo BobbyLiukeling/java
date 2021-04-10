@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <script>
+        //采用ajax post提交后台验证登录信息
+        function checkLogin() {
+            let tip = document.querySelector("#login-tip");
+            let username = document.querySelector("#username").value;
+            let password = document.querySelector("#password").value;
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/rabies/login', false);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let msg = xhr.responseText;
+                    if (msg === 'success') {
+                        tip.style.color = 'green';
+                        tip.innerHTML = 'Login success !';
+                        window.location.href = "/rabies/index.html";
+                    } else {
+                        tip.style.color = 'red';
+                        tip.innerHTML = 'Login failed !';
+                        document.querySelector("#username").value = '';
+                        document.querySelector("#password").value = '';
+                    }
+                }
+            }
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(`username=${username}&password=${password}`);
+        }
+    </script>
+</head>
+<body>
+<!-- 登录框 -->
+<div id="login" style="width: 30%; margin: 0 auto; height: 15rem; border: 1px solid #999; display:block;
+    position: absolute; top: 28%; left: 35%; z-index: 3; background: #fff">
+    <!-- 标题 -->
+    <div id="login-tip" style="background: #b884d9; width: 100%; height: 3rem; font-size: 18px; line-height: 3rem;
+             color:white; border: 1px solid white;  text-align: center;">
+        Login - box
+    </div>
+    <!-- 表单内容 -->
+    <div style="text-indent: 20px; height: 9rem; font-size: 1rem; font-weight: bold; padding: 0.5rem; line-height: 3rem;
+             border-top: 1px solid #cbc7e3;">
+        <ul style="list-style: none">
+            <li>username : &nbsp; <input id="username" type="text" name="username"></li>
+            <li>password : &nbsp; <input id="password" type="password" name="password"></li>
+        </ul>
+        <button id="login-button" type="button" onclick="checkLogin()"
+                style="background: #9541ca; width: 20%; height: 2rem; margin:0.5rem 10.5rem;
+                   text-align: center;color: #fff; border-radius: .3rem;font-size: 0.9rem;">
+            Login
+        </button>
+    </div>
+    <!-- 按钮 -->
+
+</div>
+
+</body>
+</html>

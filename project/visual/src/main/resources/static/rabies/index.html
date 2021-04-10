@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    <title class="lang" lang="eng">Human Rabies in Hubei Province</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <script src="js/language_index.js"></script>
+</head>
+<body>
+    <div style="z-index: 1">
+        <!--头部-->
+        <section class="header">
+            <div class="head w">
+                <!--logo部分-->
+                <div class="logo">
+                    <a href="index.html">
+                        <h1 class="lang" lang="eng">RABIES  </h1>
+                    </a>
+                </div>
+                <!--导航栏部分 nav-->
+                <div class="nav">
+                    <ul >
+                        <li><a class="lang" href="#moduleLink" lang="eng">Analysis modules</a></li>
+                        <li><a class="lang" href="#footerLink" lang="eng">Contact us</a></li>
+                        <li><a class="lang" href="/logout" lang="eng">Logout</a></li>
+                        <li><a class="lang" id="translate" href="#" lang="eng">中文</a></li>
+                        <script>
+                            //注册监听点击事件
+                            let transBtn = document.getElementById('translate');
+                            transBtn.onclick = function(){
+                                //英翻中
+                                if(this.getAttribute('lang') === 'eng'){
+                                    showLanguage('chi');
+                                }
+                                //中翻英
+                                else{
+                                    showLanguage('eng');
+                                }
+                            }
+                        </script>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!--介绍部分-->
+        <section class="introduction w">
+            <div class="image">
+            </div>
+            <div class="word">
+                <h1 class="lang" lang="eng"> Human Rabies in Hubei Province, China</h1>
+                <p class="info lang" lang="eng">A visual analysis platform for analyzing human rabies distribution and predicting
+                    human rabies development based on human rabies surveillance historic data in Hubei Province, China.</p>
+                <a class="learn lang" href="#moduleLink" lang="eng">learn more</a>
+            </div>
+        </section>
+
+        <!--分析模块链接-->
+        <a id="moduleLink"></a>
+        <section class="w clearfix" >
+            <div class="module-item">
+                <a href="temporalHR.html">
+                    <img src="images/module1.png" alt="Human Rabies - Temporal Distribution">
+                    <p class="lang" lang="eng">Human Rabies - Temporal Distribution</p>
+                </a>
+            </div>
+            <div class="module-item">
+                <a href="spatialHR.html">
+                    <img src="images/module2.png" alt="Human Rabies - Spatial Distribution">
+                    <p class="lang" lang="eng">Human Rabies - Spatial Distribution</p>
+                </a>
+            </div>
+            <div class="module-item module-last">
+                <a href="crowdHR.html">
+                    <img src="images/module3.png" alt="Human Rabies - Crowd Distribution">
+                    <p class="lang" lang="eng">Human Rabies - Crowd Distribution</p>
+                </a>
+            </div>
+            <div class="module-item ">
+                <a href="temporalPV.html">
+                    <img src="images/module4.png" alt="Prophylactic Vaccination - Temporal Distribution">
+                    <p class="lang" lang="eng">Prophylactic Vaccination - Temporal Distribution</p>
+                </a>
+            </div>
+            <div class="module-item">
+                <a href="spatialPV.html">
+                    <img src="images/module5.png" alt="Prophylactic Vaccination - Spatial Distribution">
+                    <p class="lang" lang="eng">Prophylactic Vaccination - Spatial Distribution</p>
+                </a>
+            </div>
+            <div class="module-item module-last">
+                <a href="timeSeries.html">
+                    <img src="images/module6.png" alt="Time Series Analysis">
+                    <p class="lang" lang="eng">Time Series Analysis</p>
+                </a>
+            </div>
+        </section>
+
+        <!--页脚部分-->
+        <a id="footerLink"></a>
+        <section class="footer">
+            <div class="contact">
+                <h2 class="lang"style="color: #8c017d; margin-bottom: 20px" lang="eng">Contact with us</h2>
+                <ul>
+                    <li class="lang" lang="eng">Email: &nbsp;wwt@stu.scu.edu.cn</li>
+                    <li class="lang" lang="eng">Organization: &nbsp;College of Computer Science, Sichuan University</li>
+                    <li class="lang" lang="eng">Address: &nbsp;No.24 South Section 1, Yihuan Road, Chengdu Sichuan, China, 610065 </li>
+                </ul>
+            </div>
+            <div class="scu">
+                <img src="images/SCULogo.png">
+            </div>
+
+        </section>
+    </div>
+</body>
+</html>
