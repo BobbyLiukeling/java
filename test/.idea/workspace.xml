@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c5ad100b-99fc-435e-b2a4-e6321b45066c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../Python/Django" beforeDir="false" afterPath="$PROJECT_DIR$/../../Python/Django" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 01/预习代码/LearnVuejs01" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 01/预习代码/LearnVuejs01" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 04/预习代码/02-tabbar" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 04/预习代码/02-tabbar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 06/上课代码/LearnVuejs06/03-testvuecli3" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 06/上课代码/LearnVuejs06/03-testvuecli3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 06/预习代码/02-tabbar" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 06/预习代码/02-tabbar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 06/预习代码/05-network" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 06/预习代码/05-network" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 08/预习代码/mall" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 08/预习代码/mall" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 09/预习代码/mall" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 09/预习代码/mall" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Web/vue/Day 11/课堂代码/supermall" beforeDir="false" afterPath="$PROJECT_DIR$/../../Web/vue/Day 11/课堂代码/supermall" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="E:\software\IntelliJ IDEA 2020.2.4\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="25SB2YJPkaxNKtQhQVOi6Dcv4ak" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/align/src/lib/biojava-core-4.2.0.jar" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager">
+    <configuration name="align1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="lib.align1" />
+      <module name="align" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="lib.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.align1" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5ad100b-99fc-435e-b2a4-e6321b45066c" name="Default Changelist" comment="" />
+      <created>1645510401418</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1645510401418</updated>
+      <workItem from="1645510402436" duration="1560000" />
+      <workItem from="1645512029488" duration="3738000" />
+      <workItem from="1645523175799" duration="2352000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="440" y="94" key="#Project_Structure" timestamp="1645510465129">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1645510465129" />
+    <state x="1092" y="295" key="FileChooserDialogImpl" timestamp="1645512858966">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1092" y="295" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1645512858966" />
+    <state width="1877" height="341" key="GridCell.Tab.0.bottom" timestamp="1645516295148">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="341" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1645516295148" />
+    <state width="1877" height="341" key="GridCell.Tab.0.center" timestamp="1645516295148">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="341" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1645516295148" />
+    <state width="1877" height="341" key="GridCell.Tab.0.left" timestamp="1645516295148">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="341" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1645516295148" />
+    <state width="1877" height="341" key="GridCell.Tab.0.right" timestamp="1645516295148">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="341" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1645516295148" />
+    <state x="792" y="115" key="SettingsEditor" timestamp="1645513312901">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="792" y="115" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1645513312901" />
+    <state x="334" y="129" key="new project wizard" timestamp="1645510452730">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="334" y="129" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1645510452730" />
+  </component>
+</project>
